@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  custom_swim:
+    build:
+      context: .  
+      dockerfile: Dockerfile.swim
+    container_name: custom_swim
+    ports:
+      - "5901:5901/tcp"
+      - "6901:6901/tcp" 
+      - "4242:4242/tcp"
+
+  manager:
+    build:
+      context: .
+      dockerfile: Dockerfile.manager
+    container_name: manager
+    depends_on:
+      - custom_swim

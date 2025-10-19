@@ -1,0 +1,12 @@
+FROM gabrielmoreno/swim
+
+RUN apt-get update && apt-get install -y nano 
+
+COPY scenario.delta /headless/seams-swim/swim/simulations/swim/traces
+
+COPY swim.ini /headless/seams-swim/swim/simulations/swim
+
+WORKDIR /headless/seams-swim/swim/simulations/swim
+
+RUN chmod +x run.sh
+CMD ./run.sh sim 1
