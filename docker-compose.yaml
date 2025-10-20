@@ -18,3 +18,13 @@ services:
     container_name: manager
     depends_on:
       - custom_swim
+    env_file:
+      - .env
+
+  #crasher:
+   # build:
+    #  context: .
+     # dockerfile: Dockerfile.crasher
+    #container_name: crasher
+    #depends_on:
+     # - custom_swim

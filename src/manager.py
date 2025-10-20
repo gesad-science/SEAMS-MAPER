@@ -63,13 +63,17 @@ def auto_adaptation_loop():
                 servers = int(client.get_metric("get_active_servers"))
                 dimmer = float(client.get_metric("get_dimmer"))
                 arrival = float(client.get_metric("get_arrival_rate"))
+                total_servers = int(client.get_metric("get_servers"))
 
-                logging.info(f"RT={basic_rt:.2f}s | Servidores={servers} | Dimmer={dimmer:.2f} | arrival={arrival:.2f} req/s")
+                logging.info(f"RT={basic_rt:.2f}s | Servidores ativos={servers} | Dimmer={dimmer:.2f} | arrival={arrival:.2f} req/s | Servidores totais={total_servers}")
 
-                if basic_rt > 2.0:
-                    logging.info("Tempo alto → adicionando servidor")
-                    result = client.set_action("add_server")
-                    logging.info(f"Resultado: {result}")
+                if basic_rt > 2.0 and total_servers > servers:
+                    logging.info("Tempo alto → Aguardando servidor ativar...")
+                elif basic_rt > 2.0:
+                    if total_servers < 3:
+                        logging.info("Tempo alto → adicionando servidor")
+                        result = client.set_action("add_server")
+                        logging.info(f"Resultado: {result}")
 
                 elif basic_rt < 0.5 and servers > 1:
                     logging.info("Tempo baixo → removendo servidor")

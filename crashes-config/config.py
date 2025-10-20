@@ -1,0 +1,2 @@
+SERVERS_TO_CRASH = 2
+ACTIVE = False
