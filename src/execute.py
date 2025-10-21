@@ -12,22 +12,29 @@ class Executor:
         return self.client.set_action("remove_server")
     
     def set_dimmer(self, value):
-        if value < 0.0 or value > 1.0:
-            value = normalize(value)
+        #if value < 0.0 or value > 1.0:
+        #    value = normalize(value)
         return self.client.set_action(f"set_dimmer {value}")
     
     def handle_plan(self, plan:dict):
-        action = plan.get("action", [])
 
-        for act in action:
-            if act == "add_server":
+        choosen_plan = next(iter(plan))
+        details = plan[choosen_plan]
+
+        action = details.get("action", [])
+
+        if isinstance(action, str):
+            actions = [action]
+        else:
+            actions = action
+    
+
+        for act in actions:
+            if "add" in act:
                 self.add_server()
-            elif act == "remove_server":
+            elif "remove" in act:
                 self.remove_server()
-            elif act == "increase_dimmer":
-                target = plan.get("target")
-                self.set_dimmer(target)
-            elif act == "decrease_dimmer":
+            elif "dimmer" in act:
                 target = plan.get("target")
                 self.set_dimmer(target)
             else:

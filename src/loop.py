@@ -20,7 +20,7 @@ def auto_adaptation_loop():
 
     client = SwimClient()
 
-    kb = KnowledgeBase(client=client)
+    kb = KnowledgeBase()
 
     monitor = Monitor(client=client, knowledge_base=kb)
     executor = Executor(client=client)
@@ -33,6 +33,9 @@ def auto_adaptation_loop():
     try:
         while True:
             try:
+                logging.info(f"KB Metrics: {kb.get_kb_metrics()}")
+
+
                 monitor.update()
                 information = monitor.get_metrics()
                 logging.info(f"RT={information['basic_rt']:.2f}s | Servidores ativos={information['active_servers']} | Dimmer={information['dimmer']:.2f} | arrival={information['arrival_rate']:.2f} req/s | Servidores totais={information['servers']}")
@@ -40,10 +43,12 @@ def auto_adaptation_loop():
                 diagnosis = analyzer.analyze()
                 logging.info(f"Diagnóstico: {diagnosis}")
 
-                plan = planner.create_plan(diagnosis)
+                plan = planner.plan(diagnosis)
                 logging.info(f"Plano de Ação: {plan}")
 
-                executor.handle_plan(plan)
+                result = executor.handle_plan(plan)
+                logging.info(f"Resultado: {result}")
+
 
                 time.sleep(10)
 

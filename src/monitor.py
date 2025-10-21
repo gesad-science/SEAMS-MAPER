@@ -6,7 +6,8 @@ class Monitor:
         self.knowledge_base = knowledge_base
         self.metrics = {}
         self.constraints = {}
-        self.knowledge_base.define_policies(self.constraints)
+        self.define_constraints()
+        self.knowledge_base.set_sistem_information(self.constraints)
         self.update()
         
     def __get_system_metrics__(self):
@@ -25,7 +26,7 @@ class Monitor:
         active_servers = int(self.metrics['active_servers'])
         ult = {}
         for i in range(active_servers):
-            ult[f'server_{i}_ult'] = self.client.get_metric(f"get_utilization server{i}")
+            ult[f'server_{i+1}_ult'] = self.client.get_metric(f"get_utilization server{i+1}")
         self.metrics['server_ult'] = ult
 
     def get_monitor_metrics(self):
@@ -33,12 +34,10 @@ class Monitor:
     
     def update(self):
         self.__get_system_metrics__()
-        self.define_constraints()
-        self.knowledge_base.update_history(self.metrics)
+        self.knowledge_base.update_historical_base(self.metrics)
 
     def define_constraints(self):
         self.constraints['max_servers'] = int(self.client.get_metric("get_max_servers"))
-        self.constraints['rt_threshold'] = 0.1
 
     def get_metrics(self):
         return self.metrics
