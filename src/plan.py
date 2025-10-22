@@ -18,4 +18,5 @@ class Planner:
             
         # Unexpected case: use LLM to generate plan
         plan_result = ask_reasoning(f"PROMPT:{self.llm['prompt']} CONTEXT:{self.llm['context']}")
-        return json.loads({'custom_plan':plan_result})
+        plan_json = json.loads(plan_result)
+        return {'custom_plan': plan_json}

@@ -12,8 +12,6 @@ class Executor:
         return self.client.set_action("remove_server")
     
     def set_dimmer(self, value):
-        #if value < 0.0 or value > 1.0:
-        #    value = normalize(value)
         return self.client.set_action(f"set_dimmer {value}")
     
     def handle_plan(self, plan:dict):

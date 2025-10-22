@@ -26,7 +26,7 @@ class Analyzer:
                 if isinstance(bounds, list) and len(bounds) == 2:
                     lower_bound = bounds[0] 
                     upper_bound = bounds[1] 
-                    if not (lower_bound <= current_value <= upper_bound):
+                    if not (lower_bound < current_value < upper_bound):
                         return False
                 else:
                     expected_value = bounds 
