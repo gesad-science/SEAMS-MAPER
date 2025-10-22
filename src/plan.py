@@ -1,7 +1,16 @@
 from reasoning import ask_reasoning
 from kb import KnowledgeBase
+from system_config import CONVERSATION_ATTEMPTS
 
 import json
+import logging
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
 
 
 class Planner:
@@ -9,14 +18,52 @@ class Planner:
         self.knowledge = knowledge
         self.last_update = self.knowledge.historical_base[-1]
         self.plan_options = self.knowledge.plan_options
-        self.llm = self.knowledge.llm_settings['plan']
+        self.llm_settings = self.knowledge.llm_settings['plan']
+        self.judge_settings = self.knowledge.llm_settings['plan_judge']
+
 
     def plan(self, analysis_result: str) -> dict:
+
+        try:
+            analysis_json = json.loads(analysis_result)
+            recomendation = analysis_json['recomendations']
+            additional_information = analysis_json['analysis']
+        except Exception as e:
+            recomendation = analysis_result
+            additional_information = ''
+
         for plan_name, plan_data in self.plan_options.items():
-            if plan_data.get('entry') == analysis_result:
+            if plan_data.get('entry') == recomendation:
                 return {plan_name: plan_data}
-            
+        
         # Unexpected case: use LLM to generate plan
-        plan_result = ask_reasoning(f"PROMPT:{self.llm['prompt']} CONTEXT:{self.llm['context']}")
+
+        plan_result = self.model_plan(diagnosis=recomendation+' : '+ additional_information)
         plan_json = json.loads(plan_result)
-        return {'custom_plan': plan_json}
+        plan_json['entry'] = recomendation 
+        new_plan_name = f"{recomendation}_plan"
+        new_plan = {new_plan_name: plan_json}
+        self.knowledge.update_plans(new_plan=new_plan)
+        return new_plan
+
+    
+    def model_plan(self, diagnosis:str) -> str:
+        additional_context = ''
+        attempts = 0
+
+        while attempts <= CONVERSATION_ATTEMPTS:
+            plan_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} ADDITIONAL_CONTEXT:{additional_context}")
+            logging.info(f"Plan Result: {plan_result}")
+            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} PLANNER_RESULT:{plan_result}")
+            logging.info(f"Judge Result: {judge_result}")
+            try:
+                judge_json = json.loads(judge_result)
+                judge_result = str(judge_json['verdict'])
+            except Exception as e:
+                logging.error(f"Error parsing judge result JSON: {e}")
+                continue
+            if 'true' in judge_result.lower():
+                return plan_result
+            
+            additional_context += f"\nPrevious Analysis was rejected because: {judge_result}\nPlease provide a revised analysis.\n"
+            attempts += 1

@@ -46,6 +46,8 @@ def auto_adaptation_loop():
                 plan = planner.plan(diagnosis)
                 logging.info(f"Plano de Ação: {plan}")
 
+                kb.update_metric_reaction(diagonosis=diagnosis, plan=plan)
+
                 result = executor.handle_plan(plan)
                 logging.info(f"Resultado: {result}")
 

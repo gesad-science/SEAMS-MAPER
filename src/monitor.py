@@ -7,7 +7,7 @@ class Monitor:
         self.metrics = {}
         self.constraints = {}
         self.define_constraints()
-        self.knowledge_base.set_sistem_information(self.constraints)
+        self.knowledge_base.set_system_information(self.constraints)
         self.update()
         
     def __get_system_metrics__(self):
