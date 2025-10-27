@@ -3,7 +3,9 @@ from kb import KnowledgeBase
 import logging
 import sys
 import json
-from system_config import CONVERSATION_ATTEMPTS
+from system_config import CONVERSATION_ATTEMPTS, REASONING, JUDGE_MODE
+
+from util.dict_utils import parse_json
 
 logging.basicConfig(
     level=logging.INFO,
@@ -23,9 +25,12 @@ class Analyzer:
         for option_name, option_criteria in sorted(self.adaptation_options.items(), key=lambda x: x[1]['priority']):
             if self.evaluate_option(option_criteria):
                 return option_name
-
-        analysis_result = self.model_analyze()
-        return analysis_result
+            
+        if REASONING:
+            analysis_result = self.model_analyze()
+            return analysis_result
+        
+        return "call_human"
     
     def evaluate_option(self, criteria: dict) -> bool:
         for metric, bounds in criteria.items():
@@ -37,7 +42,6 @@ class Analyzer:
                     lower_bound = bounds[0] 
                     upper_bound = bounds[1] 
                     if criteria['margin_']:
-                        logging.info(f"current value {current_value}")
                         if not (lower_bound <= current_value <= upper_bound):
                             return False
                     else:
@@ -57,14 +61,17 @@ class Analyzer:
         attempts = 0
 
         while attempts <= CONVERSATION_ATTEMPTS:
-            analysis_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ADDITIONAL_CONTEXT:{additional_context}")
-            logging.info(f"Analyzer Result: {analysis_result}")
-            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER_RESULT:{analysis_result}")
+            analysis_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ADDITIONAL_CONTEXT:{additional_context}", self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+            if not JUDGE_MODE:
+                logging.info(f"Analyzer Result: {analysis_result}")
+                return analysis_result
+            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER_RESULT:{analysis_result}", self.judge_settings['temperature'], self.judge_settings['max_tokens'])
             logging.info(f"Judge Result: {judge_result}")
             try:
-                judge_json = json.loads(judge_result)
+                judge_json = json.loads(parse_json(judge_result))
                 judge_result = str(judge_json['verdict'])
             except Exception as e:
+                attempts += 1
                 logging.error(f"Error parsing judge result JSON: {e}")
                 continue
             if 'true' in judge_result.lower():
@@ -72,4 +79,6 @@ class Analyzer:
             
             additional_context += f"\nPrevious Analysis was rejected because: {judge_result}\nPlease provide a revised analysis.\n"
             attempts += 1
+
+        return "call_human"
     

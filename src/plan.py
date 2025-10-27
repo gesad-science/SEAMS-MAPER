@@ -1,6 +1,9 @@
 from reasoning import ask_reasoning
 from kb import KnowledgeBase
-from system_config import CONVERSATION_ATTEMPTS
+from system_config import CONVERSATION_ATTEMPTS, REASONING, JUDGE_MODE
+
+from util.dict_utils import parse_json
+
 
 import json
 import logging
@@ -25,10 +28,12 @@ class Planner:
     def plan(self, analysis_result: str) -> dict:
 
         try:
-            analysis_json = json.loads(analysis_result)
+            analysis_json = json.loads(parse_json(analysis_result))
             recomendation = analysis_json['recomendations']
             additional_information = analysis_json['analysis']
+            #logging.info(f"RECOMENDATION: {recomendation}, ADD_INF: {additional_information}")
         except Exception as e:
+            #logging.info(f"ERRO NO PARSE: {analysis_result}")
             recomendation = analysis_result
             additional_information = ''
 
@@ -37,14 +42,16 @@ class Planner:
                 return {plan_name: plan_data}
         
         # Unexpected case: use LLM to generate plan
-
-        plan_result = self.model_plan(diagnosis=recomendation+' : '+ additional_information)
-        plan_json = json.loads(plan_result)
-        plan_json['entry'] = recomendation 
-        new_plan_name = f"{recomendation}_plan"
-        new_plan = {new_plan_name: plan_json}
-        self.knowledge.update_plans(new_plan=new_plan)
-        return new_plan
+        if REASONING:
+            plan_result = self.model_plan(diagnosis=recomendation+' : '+ additional_information)
+            plan_json = json.loads(parse_json(plan_result))
+            plan_json['entry'] = recomendation 
+            new_plan_name = f"{recomendation}_plan"
+            new_plan = {new_plan_name: plan_json}
+            self.knowledge.update_plans(new_plan=new_plan)
+            return new_plan
+        
+        return {'danger': {'action':['call_human']}}
 
     
     def model_plan(self, diagnosis:str) -> str:
@@ -52,18 +59,24 @@ class Planner:
         attempts = 0
 
         while attempts <= CONVERSATION_ATTEMPTS:
-            plan_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} ADDITIONAL_CONTEXT:{additional_context}")
-            logging.info(f"Plan Result: {plan_result}")
-            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} PLANNER_RESULT:{plan_result}")
+            plan_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} ADDITIONAL_CONTEXT:{additional_context}", self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+            if not JUDGE_MODE:
+                logging.info(f"Plan Result: {plan_result}")
+                return plan_result
+            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} PLANNER_RESULT:{plan_result}", self.judge_settings['temperature'], self.judge_settings['max_tokens'])
             logging.info(f"Judge Result: {judge_result}")
             try:
-                judge_json = json.loads(judge_result)
+                judge_json = json.loads(parse_json(judge_result))
                 judge_result = str(judge_json['verdict'])
             except Exception as e:
                 logging.error(f"Error parsing judge result JSON: {e}")
+                attempts += 1
                 continue
             if 'true' in judge_result.lower():
                 return plan_result
             
             additional_context += f"\nPrevious Analysis was rejected because: {judge_result}\nPlease provide a revised analysis.\n"
             attempts += 1
+
+        return {'danger': {'action':['call_human']}}
+

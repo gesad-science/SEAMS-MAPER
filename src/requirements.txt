@@ -1,0 +1,2 @@
+openai==1.106.1
+huggingface-hub==0.34.4

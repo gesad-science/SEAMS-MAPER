@@ -1,7 +1,17 @@
 from user_config import CONSTRAINTS, ADAPTATION_GOALS, ADAPTATION_OPTIONS, PLAN_OPTIONS, LLM_SETTINGS
 from system_config import JUGDE_SETTINGS
-from util.parse_dict import substitute_values
+from util.dict_utils import substitute_values
 from copy import deepcopy
+
+import logging 
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+
 
 
 class KnowledgeBase:
@@ -16,7 +26,7 @@ class KnowledgeBase:
         self.plan_options = {}
         
     def get_kb_metrics(self):
-        return f"Knowledge(Adaptation_goals={self.adaptation_goals}, History={str(self.historical_base[-5:])}, Constraints={self.parse_constraints()}), Last_update={str(self.last_update)})"
+        return f"Knowledge(ADAPTATION_GOALS={self.adaptation_goals}, History={str(self.historical_base[-5:])}, Constraints={self.parse_constraints()}), Last_update={str(self.last_update)})"
     
     def set_system_information(self, info: dict = {}):
         self.system_information.update(info)
@@ -46,5 +56,6 @@ class KnowledgeBase:
         self.plan_options.update(new_plan)
 
     def update_metric_reaction(self, diagonosis, plan):
+        #logging.info(f"ENTRANDO NO KB: DIAGNOSIS->{diagonosis}, PLAN: {plan}")
         self.last_update['diagnosis'] = diagonosis
         self.last_update['plan'] = plan

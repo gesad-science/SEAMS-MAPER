@@ -1,6 +1,6 @@
-from util.normalize import normalize
 import logging
 import sys
+import time
 
 logging.basicConfig(
     level=logging.INFO,
@@ -33,16 +33,18 @@ class Executor:
         else:
             actions = action
     
-        logging.info(f"Executor executing plan: {choosen_plan} with actions: {actions}")
+        #logging.info(f"Executor executing plan: {choosen_plan} with actions: {actions}")
 
         for act in actions:
             if "add" in act:
+                #logging.info(f"Additioning a server")
                 self.add_server()
             elif "remove" in act:
+                #logging.info(f"Removing server")
                 self.remove_server()
             elif "dimmer" in act:
                 target = details.get("target")
-                logging.info(f"Setting dimmer to target: {target}")
+                #logging.info(f"Setting dimmer to target: {target}")
                 self.set_dimmer(float(target))
             else:
                 return "Unknown action"
