@@ -1,62 +1,84 @@
 from reasoning import ask_reasoning
 from kb import KnowledgeBase
+import logging
+import sys
+import json
+from system_config import CONVERSATION_ATTEMPTS, REASONING, JUDGE_MODE
+
+from util.dict_utils import parse_json
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
 
 class Analyzer:
     def __init__(self, knowledge:KnowledgeBase):
         self.knowledge = knowledge
-        self.last_update = self.knowledge.history[len(self.knowledge.history)-1]
+        self.last_update = self.knowledge.last_update
+        self.adaptation_options = self.knowledge.adaptation_options
+        self.llm_settings = self.knowledge.llm_settings['analyze']
+        self.judge_settings = self.knowledge.llm_settings['analyze_judge']
 
     def analyze(self):
-        rt = self.last_update.get('basic_rt')
-        rt_threshold = self.knowledge.policies.get('rt_threshold')
-        dimmer = self.last_update.get('dimmer')
-        active_servers = self.last_update.get('active_servers')
-
-        if rt < rt_threshold:
-            if active_servers == 1:
-                if dimmer == 1:
-                    analisys = "ok"
-                    self.knowledge.set_diagnosis(analisys)
-                    return analisys 
-                analisys = "low_dimmer"
-                self.knowledge.set_diagnosis(analisys)
-                return analisys
-            analisys = "too_many_servers"
-            self.knowledge.set_diagnosis(analisys)
-            return analisys 
-
-        if active_servers == 1:
-            analisys = "too_few_servers"
-            self.knowledge.set_diagnosis(analisys)
-            return analisys
-        if dimmer > 0.75:
-            analisys = "too_high_dimmer"
-            self.knowledge.set_diagnosis(analisys)
-            return analisys  
+        for option_name, option_criteria in sorted(self.adaptation_options.items(), key=lambda x: x[1]['priority']):
+            if self.evaluate_option(option_criteria):
+                return option_name
+            
+        if REASONING:
+            analysis_result = self.model_analyze()
+            return analysis_result
         
-        analisys = self.call_agent()
-        self.knowledge.set_diagnosis(analisys)
-        return analisys
+        return "call_human"
+    
+    def evaluate_option(self, criteria: dict) -> bool:
+        for metric, bounds in criteria.items():
+            if metric == 'priority' or metric=='margin_':
+                continue
+            current_value = self.last_update.get(metric)
+            try:
+                if isinstance(bounds, list) and len(bounds) == 2:
+                    lower_bound = bounds[0] 
+                    upper_bound = bounds[1] 
+                    if criteria['margin_']:
+                        if not (lower_bound <= current_value <= upper_bound):
+                            return False
+                    else:
+                        if not (lower_bound < current_value < upper_bound):
+                            return False
+                else:
+                    expected_value = bounds 
+                    if current_value != expected_value:
+                        return False
+            except Exception as e:
+                raise ValueError(f"Error evaluating metric '{metric}': {e}")
+        return True
+    
+    def model_analyze(self) -> str:
 
-    def call_agent(self):
-        prompt = f"""
-        You are the ANALYZE component of a MAPE-K self-adaptive system.
-        Your role is to **interpret** the current system state based on monitoring data and knowledge base thresholds.
-        You **cannot** take or suggest direct adaptation actions (such as adding/removing servers or changing dimmer levels) — 
-        those are responsibilities of the PLAN and EXECUTE components.
+        additional_context = ''
+        attempts = 0
 
-        Context:
-        - Knowledge Base: {self.knowledge.get_kb_metrics()}
-        - Last Update From Environment: {self.last_update}
-        - ANSWER BRIEFLY based SOLELY on the provided data and knowledge base policies.
+        while attempts <= CONVERSATION_ATTEMPTS:
+            analysis_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ADDITIONAL_CONTEXT:{additional_context}", self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+            if not JUDGE_MODE:
+                logging.info(f"Analyzer Result: {analysis_result}")
+                return analysis_result
+            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER_RESULT:{analysis_result}", self.judge_settings['temperature'], self.judge_settings['max_tokens'])
+            logging.info(f"Judge Result: {judge_result}")
+            try:
+                judge_json = json.loads(parse_json(judge_result))
+                judge_result = str(judge_json['verdict'])
+            except Exception as e:
+                attempts += 1
+                logging.error(f"Error parsing judge result JSON: {e}")
+                continue
+            if 'true' in judge_result.lower():
+                return analysis_result
+            
+            additional_context += f"\nPrevious Analysis was rejected because: {judge_result}\nPlease provide a revised analysis.\n"
+            attempts += 1
 
-        Task:
-        1. Explain in natural language what the current system condition indicates.
-        2. Identify potential causes for this state using only the provided data.
-        3. If relevant, mention what type of adaptation *might* be needed conceptually (but do not propose or execute any specific action).
-
-        Provide a concise but insightful analysis of the system’s current situation.
-        """
-
-        response = ask_reasoning(prompt)
-        return response
+        return "call_human"
+    

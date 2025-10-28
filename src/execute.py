@@ -1,5 +1,12 @@
-from util.normalize import normalize
+import logging
+import sys
+import time
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
 
 class Executor:
     def __init__(self, client):
@@ -12,24 +19,33 @@ class Executor:
         return self.client.set_action("remove_server")
     
     def set_dimmer(self, value):
-        if value < 0.0 or value > 1.0:
-            value = normalize(value)
         return self.client.set_action(f"set_dimmer {value}")
     
     def handle_plan(self, plan:dict):
-        action = plan.get("action", [])
 
-        for act in action:
-            if act == "add_server":
+        choosen_plan = next(iter(plan))
+        details = plan[choosen_plan]
+
+        action = details.get("action", [])
+
+        if isinstance(action, str):
+            actions = [action]
+        else:
+            actions = action
+    
+        #logging.info(f"Executor executing plan: {choosen_plan} with actions: {actions}")
+
+        for act in actions:
+            if "add" in act:
+                #logging.info(f"Additioning a server")
                 self.add_server()
-            elif act == "remove_server":
+            elif "remove" in act:
+                #logging.info(f"Removing server")
                 self.remove_server()
-            elif act == "increase_dimmer":
-                target = plan.get("target")
-                self.set_dimmer(target)
-            elif act == "decrease_dimmer":
-                target = plan.get("target")
-                self.set_dimmer(target)
+            elif "dimmer" in act:
+                target = details.get("target")
+                #logging.info(f"Setting dimmer to target: {target}")
+                self.set_dimmer(float(target))
             else:
                 return "Unknown action"
         
