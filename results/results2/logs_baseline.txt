@@ -1,0 +1,80 @@
+custom_swim  | t=0 addServer() complete
+custom_swim  | t=0 addServer() complete
+custom_swim  | t=0 addServer() complete
+manager      | 2025-10-23 16:28:48,751 - INFO - Connected to swim in custom_swim:4242
+manager      | 2025-10-23 16:28:48,752 - INFO - Iniciando loop de adaptação automática...
+custom_swim  | t=1.340021 executing removeServer()
+custom_swim  | scheduled complete remove at 1.48260166373
+manager      | 2025-10-23 16:30:24,854 - INFO - RT=0.01s | Active servers=3 | Dimmer=0.90 | arrival=41.81 req/s | Total servers=3 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=97.443401 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=157.443401 addServer() complete
+manager      | 2025-10-23 16:32:04,965 - INFO - RT=7.88s | Active servers=2 | Dimmer=0.90 | arrival=43.25 req/s | Total servers=2 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=197.555579 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=257.555579 addServer() complete
+manager      | 2025-10-23 16:33:45,069 - INFO - RT=7.50s | Active servers=3 | Dimmer=0.90 | arrival=43.29 req/s | Total servers=3 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=297.659722 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=357.659722 addServer() complete
+manager      | 2025-10-23 16:35:25,174 - INFO - RT=4.94s | Active servers=4 | Dimmer=0.90 | arrival=43.58 req/s | Total servers=4 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=397.764617 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=457.764617 addServer() complete
+manager      | 2025-10-23 16:37:05,285 - INFO - RT=3.51s | Active servers=5 | Dimmer=0.90 | arrival=43.65 req/s | Total servers=5 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=497.87728 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=557.87728 addServer() complete
+manager      | 2025-10-23 16:38:45,392 - INFO - RT=2.42s | Active servers=6 | Dimmer=0.90 | arrival=51.59 req/s | Total servers=6 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=597.985112 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=657.985112 addServer() complete
+manager      | 2025-10-23 16:40:25,499 - INFO - RT=2.00s | Active servers=7 | Dimmer=0.90 | arrival=64.87 req/s | Total servers=7 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=698.088952 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=698.090763 executing removeServer()
+custom_swim  | scheduled complete remove at 698.090763
+manager      | 2025-10-23 16:40:25,503 - INFO - Executing customized scenario: crashes
+manager      | 2025-10-23 16:40:25,503 - INFO - Executing command: remove_server
+manager      | 2025-10-23 16:40:25,503 - INFO - Executing command: remove_server
+custom_swim  | t=698.091297 executing removeServer()
+manager      | 2025-10-23 16:40:25,504 - INFO - Customized scenario finished
+custom_swim  | scheduled complete remove at 712.026309798147
+manager      | 2025-10-23 16:42:05,605 - INFO - RT=3.24s | Active servers=8 | Dimmer=0.90 | arrival=108.73 req/s | Total servers=8 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=798.194878 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=858.194878 addServer() complete
+manager      | 2025-10-23 16:43:45,710 - INFO - RT=4.78s | Active servers=7 | Dimmer=0.90 | arrival=153.60 req/s | Total servers=7 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=898.301621 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=958.301621 addServer() complete
+manager      | 2025-10-23 16:45:23,814 - INFO - RT=4.39s | Active servers=8 | Dimmer=0.90 | arrival=162.21 req/s | Total servers=8 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=996.405202 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=1056.405202 addServer() complete
+manager      | 2025-10-23 16:47:03,921 - INFO - RT=4.03s | Active servers=9 | Dimmer=0.90 | arrival=172.83 req/s | Total servers=9 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+manager      | 2025-10-23 16:48:44,035 - INFO - RT=4.08s | Active servers=10 | Dimmer=0.90 | arrival=170.53 req/s | Total servers=10 | Diagnosis: call_human | Action plan: {'danger': {'action': ['call_human']}} | Result: Unknown action
+manager      | 2025-10-23 16:50:24,149 - INFO - RT=4.33s | Active servers=10 | Dimmer=0.90 | arrival=155.94 req/s | Total servers=10 | Diagnosis: call_human | Action plan: {'danger': {'action': ['call_human']}} | Result: Unknown action
+manager      | 2025-10-23 16:52:04,259 - INFO - RT=3.34s | Active servers=10 | Dimmer=0.90 | arrival=112.37 req/s | Total servers=10 | Diagnosis: call_human | Action plan: {'danger': {'action': ['call_human']}} | Result: Unknown action
+custom_swim  | t=1396.851514 executing removeServer()
+custom_swim  | scheduled complete remove at 1396.851514
+manager      | 2025-10-23 16:53:44,372 - INFO - RT=0.01s | Active servers=10 | Dimmer=0.90 | arrival=66.87 req/s | Total servers=10 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=1496.963574 executing removeServer()
+custom_swim  | scheduled complete remove at 1496.983319709786
+manager      | 2025-10-23 16:55:24,483 - INFO - RT=0.00s | Active servers=9 | Dimmer=0.90 | arrival=61.99 req/s | Total servers=9 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=1597.076367 executing removeServer()
+custom_swim  | scheduled complete remove at 1597.076367
+manager      | 2025-10-23 16:57:04,600 - INFO - RT=0.00s | Active servers=8 | Dimmer=0.90 | arrival=68.62 req/s | Total servers=8 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=1697.192199 executing removeServer()
+custom_swim  | scheduled complete remove at 1697.192199
+manager      | 2025-10-23 16:58:44,714 - INFO - RT=0.00s | Active servers=7 | Dimmer=0.90 | arrival=64.68 req/s | Total servers=7 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=1797.305301 executing removeServer()
+custom_swim  | scheduled complete remove at 1797.305301
+manager      | 2025-10-23 17:00:24,822 - INFO - RT=0.00s | Active servers=6 | Dimmer=0.90 | arrival=64.95 req/s | Total servers=6 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=1897.419854 executing removeServer()
+custom_swim  | scheduled complete remove at 1897.419854
+manager      | 2025-10-23 17:02:04,935 - INFO - RT=0.00s | Active servers=5 | Dimmer=0.90 | arrival=65.08 req/s | Total servers=5 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=1997.527739 executing removeServer()
+custom_swim  | scheduled complete remove at 1997.527739
+custom_swim  | All runs completed.
+

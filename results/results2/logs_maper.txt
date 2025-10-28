@@ -1,0 +1,121 @@
+custom_swim  | sim run 1: $trace="traces/scenario.delta", $latency=60, $repetition=0
+custom_swim  | t=0 addServer() complete
+custom_swim  | t=0 addServer() complete
+custom_swim  | t=0 addServer() complete
+manager      | 2025-10-23 17:14:20,366 - INFO - Connected to swim in custom_swim:4242
+manager      | 2025-10-23 17:14:20,369 - INFO - Iniciando loop de adaptação automática...
+custom_swim  | t=1.622729 executing removeServer()
+custom_swim  | scheduled complete remove at 1.831516951171
+manager      | 2025-10-23 17:15:56,471 - INFO - RT=0.01s | Active servers=3 | Dimmer=0.90 | arrival=41.32 req/s | Total servers=3 | Diagnosis: decrease_servers | Action plan: {'decrease_servers_plan': {'entry': 'decrease_servers', 'action': ['remove_server'], 'reason': 'System underutilized; can remove a server to optimize resources.'}} | Result: ok
+custom_swim  | t=97.725879 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=157.725879 addServer() complete
+manager      | 2025-10-23 17:17:36,582 - INFO - RT=7.82s | Active servers=2 | Dimmer=0.90 | arrival=43.24 req/s | Total servers=2 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=197.83672 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=257.83672 addServer() complete
+manager      | 2025-10-23 17:19:16,698 - INFO - RT=7.43s | Active servers=3 | Dimmer=0.90 | arrival=43.32 req/s | Total servers=3 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=297.952294 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=357.952294 addServer() complete
+manager      | 2025-10-23 17:20:56,813 - INFO - RT=4.90s | Active servers=4 | Dimmer=0.90 | arrival=43.59 req/s | Total servers=4 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=398.067329 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=458.067329 addServer() complete
+manager      | 2025-10-23 17:22:36,928 - INFO - RT=3.48s | Active servers=5 | Dimmer=0.90 | arrival=43.65 req/s | Total servers=5 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=498.183529 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=558.183529 addServer() complete
+manager      | 2025-10-23 17:24:17,037 - INFO - RT=2.41s | Active servers=6 | Dimmer=0.90 | arrival=51.60 req/s | Total servers=6 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=598.292808 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=658.292808 addServer() complete
+manager      | 2025-10-23 17:25:57,147 - INFO - RT=2.06s | Active servers=7 | Dimmer=0.90 | arrival=64.93 req/s | Total servers=7 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=698.40321 executing addServer()
+custom_swim  | adding server with latency=60
+manager      | 2025-10-23 17:25:57,154 - INFO - Executing customized scenario: crashes
+manager      | 2025-10-23 17:25:57,154 - INFO - Executing command: remove_server
+custom_swim  | t=698.405445 executing removeServer()
+custom_swim  | scheduled complete remove at 698.405445
+manager      | 2025-10-23 17:25:57,154 - INFO - Executing command: remove_server
+custom_swim  | t=698.406295 executing removeServer()
+manager      | 2025-10-23 17:25:57,155 - INFO - Customized scenario finished
+custom_swim  | scheduled complete remove at 712.694364643791
+manager      | 2025-10-23 17:27:37,254 - INFO - RT=3.35s | Active servers=8 | Dimmer=0.90 | arrival=108.91 req/s | Total servers=8 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=798.511712 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=858.511712 addServer() complete
+manager      | 2025-10-23 17:29:15,362 - INFO - RT=4.86s | Active servers=7 | Dimmer=0.90 | arrival=153.61 req/s | Total servers=7 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=896.618132 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=956.618132 addServer() complete
+manager      | 2025-10-23 17:30:55,474 - INFO - RT=4.49s | Active servers=8 | Dimmer=0.90 | arrival=161.98 req/s | Total servers=8 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+custom_swim  | t=996.730415 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=1056.730415 addServer() complete
+manager      | 2025-10-23 17:32:35,590 - INFO - RT=4.11s | Active servers=9 | Dimmer=0.90 | arrival=172.85 req/s | Total servers=9 | Diagnosis: increase_servers | Action plan: {'increase_servers_plan': {'entry': 'increase_servers', 'action': ['add_server'], 'reason': 'System overloaded; more servers may be needed to reduce response time.'}} | Result: ok
+manager      | 2025-10-23 17:33:10,081 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:33:28,000 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:33:51,265 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:34:10,780 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1192.033323 executing addServer()
+custom_swim  | adding server with latency=60
+custom_swim  | t=1192.034804 executing setDimmer(1)
+manager      | 2025-10-23 17:34:16,788 - INFO - RT=4.15s | Active servers=10 | Dimmer=0.90 | arrival=170.50 req/s | Total servers=10 | Diagnosis: {
+manager      |   "recomendations": "capacity_expansion_may_be_required",
+manager      |   "analysis": "Current_load_is_high: arrival_rate_41.3858_vs_throughput_4.32213. Even_with_optimal_config_throughput_28.3934<arrival_rate, indicating_under_provisioning_to_handle_current_demand. Baseline_latency_basic_rt_0.0144624 is well_below_threshold_0.1, but_risk_of_latency_growth_remains_under_heavy_load. With_only_3_servers_and_dimmer_0.9_near_max,_capacity_may_be_insufficient_to_reach_opt_throughput. Per_server_utilization_values_(server_1_ult_0.00261499,_server_2_ult_0.00240937,_server_3_ult_0.00245888)_are_low,_hinting_at_queue_or_external_bottlenecks_more_than_cpu_saturation. activating_server_is_false,_no_scaling_in_progress. Conceptual_adaptation_needed: consider_scale_out_to_raise_max_throughput_and_better_match_arrival_rate_and_latency_targets;_also_monitor_queue_length_and_external_dependencies_that_might_limit_throughput."
+manager      | } | Action plan: {'capacity_expansion_may_be_required_plan': {'action': ['add_server', 'set_dimmer'], 'target': 1.0, 'reason': 'Current arrival_rate (41.39) far exceeds achieved throughput even in optimal config (28.39). With 3 servers and dimmer at 0.9 (near max), capacity expansion is needed. Per-server utilizations are low, suggesting queue or external bottlenecks rather than CPU saturation. Propose scaling out by adding one server (to 4) and increasing dimmer to 1.0 to raise max throughput and better match demand; monitor queue length and external dependencies after deployment.', 'entry': 'capacity_expansion_may_be_required'}} | Result: ok
+manager      | 2025-10-23 17:34:45,732 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:35:10,707 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1252.033323 addServer() complete
+manager      | 2025-10-23 17:35:36,309 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:35:58,955 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:36:16,489 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:36:38,927 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1340.180695 executing addServer()
+custom_swim  | adding server with latency=60
+manager      | 2025-10-23 17:36:38,931 - INFO - RT=4.39s | Active servers=10 | Dimmer=1.00 | arrival=155.59 req/s | Total servers=11 | Diagnosis: {
+manager      |   "recomendations": "SCALE_OUT_FOR_HIGHER_THROUGHPUT",
+manager      |   "analysis": "Current condition shows arrival_rate ~41.39 vs throughput ~4.32, indicating a potential backlog since demand far exceeds served capacity. Latency (basic_rt ~0.0145 s) remains well below the 0.1 s threshold, so latency is not currently a bottleneck. Optimum throughput ~28.39 is higher than current, and there are 3 active servers with no activation in progress; dimmer at 0.9 suggests near-max throttling but isn’t the root cause here. Per-server utilization ~0.0025 is very low, which may point to measurement drift or that the bottleneck lies outside the measured metrics. Overall, capacity appears under-provisioned for the observed load, risking queue growth. Potential causes from the data include insufficient capacity relative to demand and possible bottlenecks elsewhere not reflected in these metrics. Conceptually, adaptation might be needed to increase capacity or optimize throughput (e.g., scale-out or workload rebalancing), while monitoring for measurement anomalies."
+manager      | } | Action plan: {'SCALE_OUT_FOR_HIGHER_THROUGHPUT_plan': {'action': ['add_server'], 'target': 1, 'reason': 'Current arrival_rate (~41.39) far exceeds current throughput (~4.32) with 3 active servers, indicating capacity under-provisioning and potential backlog. Latency remains well below the 0.1s threshold, so the bottleneck is capacity, not latency. Optimum throughput is ~28.39; increasing capacity via a single-scale-out aligns with the analysis and follows the guideline to activate only one server at a time. Monitor impact and replan if backlog persists.', 'entry': 'SCALE_OUT_FOR_HIGHER_THROUGHPUT'}} | Result: ok
+manager      | 2025-10-23 17:37:10,055 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1400.180695 addServer() complete
+manager      | 2025-10-23 17:37:39,698 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:38:00,635 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:38:13,234 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1434.487791 executing addServer()
+custom_swim  | adding server with latency=60
+manager      | 2025-10-23 17:38:13,238 - INFO - RT=2.29s | Active servers=11 | Dimmer=1.00 | arrival=89.48 req/s | Total servers=12 | Diagnosis: {"recomendations": "scale_out_to_meet_load", "analysis": "Current condition indicates demand exceeds current capacity: arrival_rate 41.3858/s vs throughput 4.32213/s with only 3 active servers. The target throughput (opt_throughput 28.3934) is far from achieved, suggesting capacity bottleneck. Latency (basic_rt 0.0144624) is well below the threshold (0.1), so latency is not the issue. No servers are being activated right now (activating_server False). Dimmer is near max (0.9), which would permit more load if other constraints allow, but throughput remains low. Reported per-server utilization values (server_1_ult ~0.0026, server_2_ult ~0.0024, server_3_ult ~0.0025) are very small, which is unusual given the incoming rate and may indicate measurement granularity issues or a misalignment between load and these metrics. Potential causes include under-provisioned capacity, misreported metrics, or upstream bottlenecks. Conceptual adaptation: increase capacity (scale-out) to raise throughput toward the optimum while monitoring to ensure latency stays acceptable."} | Action plan: {'scale_out_to_meet_load_plan': {'action': ['add_server'], 'reason': 'Demand exceeds capacity: arrival_rate 41.3858/s vs current throughput 4.32213/s with 3 active servers; target throughput opt_throughput 28.3934 is not met. Latency is acceptable (basic_rt 0.0145 s), indicating the bottleneck is capacity. The plan follows the rule to activate only one server at a time; adding a single server should increase capacity toward the optimum. Note: observed per-server utilization values seem anomalous and should be validated after scaling.', 'entry': 'scale_out_to_meet_load'}} | Result: ok
+manager      | 2025-10-23 17:38:39,908 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:38:55,658 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:39:10,748 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1494.487791 addServer() complete
+manager      | 2025-10-23 17:39:29,919 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1511.172382 executing addServer()
+custom_swim  | adding server with latency=60
+manager      | 2025-10-23 17:39:29,923 - INFO - RT=0.00s | Active servers=12 | Dimmer=1.00 | arrival=64.27 req/s | Total servers=13 | Diagnosis: {
+manager      |   "recomendations": "scale_out_to_meet_high_arrival_and_improve_throughput",
+manager      |   "analysis": "Current data shows a high arrival_rate (41.3858) with low observed throughput (4.32213) and 3 active servers. The basic_rt (0.0144624) is well below the threshold (0.1), so latency is not the bottleneck. The opt_throughput (28.3934) is much higher than current throughput, indicating a capacity shortfall rather than poor latency. No activating_server action is in progress, suggesting the system isn’t scaling up to handle demand. Conceptually, an adaptation to increase capacity (scale-out/add more servers or reallocate resources) would be appropriate to approach the target throughput while maintaining low latency. Per-server_ult values (~0.0025) appear very low; if these reflect utilization, there may be a discrepancy in measurement or distribution, but the primary issue remains capacity.
+manager      | } | Action plan: {'{\n  "recomendations": "scale_out_to_meet_high_arrival_and_improve_throughput",\n  "analysis": "Current data shows a high arrival_rate (41.3858) with low observed throughput (4.32213) and 3 active servers. The basic_rt (0.0144624) is well below the threshold (0.1), so latency is not the bottleneck. The opt_throughput (28.3934) is much higher than current throughput, indicating a capacity shortfall rather than poor latency. No activating_server action is in progress, suggesting the system isn’t scaling up to handle demand. Conceptually, an adaptation to increase capacity (scale-out/add more servers or reallocate resources) would be appropriate to approach the target throughput while maintaining low latency. Per-server_ult values (~0.0025) appear very low; if these reflect utilization, there may be a discrepancy in measurement or distribution, but the primary issue remains capacity.\n}_plan': {'action': ['add_server'], 'target': None, 'reason': 'Analysis indicates a capacity shortfall: arrival_rate 41.3858 with observed throughput 4.32213, far below opt_throughput 28.3934. Latency remains low (basic_rt 0.0144624 < 0.1). No activating_server in progress; scale out by adding one server to increase capacity toward the target throughput. Current active_servers = 3; plan to increment to 4. Per-server ULT values are low, suggesting capacity improvement is the primary need rather than reallocation or tuning.', 'entry': '{\n  "recomendations": "scale_out_to_meet_high_arrival_and_improve_throughput",\n  "analysis": "Current data shows a high arrival_rate (41.3858) with low observed throughput (4.32213) and 3 active servers. The basic_rt (0.0144624) is well below the threshold (0.1), so latency is not the bottleneck. The opt_throughput (28.3934) is much higher than current throughput, indicating a capacity shortfall rather than poor latency. No activating_server action is in progress, suggesting the system isn’t scaling up to handle demand. Conceptually, an adaptation to increase capacity (scale-out/add more servers or reallocate resources) would be appropriate to approach the target throughput while maintaining low latency. Per-server_ult values (~0.0025) appear very low; if these reflect utilization, there may be a discrepancy in measurement or distribution, but the primary issue remains capacity.\n}'}} | Result: ok
+manager      | 2025-10-23 17:39:52,887 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:40:22,036 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1571.172382 addServer() complete
+manager      | 2025-10-23 17:40:47,476 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:41:12,029 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:41:46,910 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:42:00,590 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:42:21,550 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:42:43,621 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1704.874581 executing addServer()
+custom_swim  | adding server with latency=60
+manager      | 2025-10-23 17:42:43,625 - INFO - RT=0.00s | Active servers=13 | Dimmer=1.00 | arrival=62.14 req/s | Total servers=14 | Diagnosis: {"recomendations": "scale_out_to_meet_throughput", "analysis": "Current condition: RT is well below the threshold, so latency is not the bottleneck. Arrival rate 41.3858 greatly exceeds current throughput 4.32213, while opt_throughput 28.3934 suggests capacity is insufficient for the load. With 3 active servers and no activation in progress, the system is under-provisioned and at risk of queue growth. Dimmer at 0.9 indicates high yet not saturated resource usage. Potential causes from data: limited capacity (only 3 servers), no scaling action underway, and possibly anomalous server utilization metrics (server_ult ~0.0026 each) that could reflect measurement quirks or uneven load. Conceptual adaptation: scaling out or reconfiguring to increase throughput capacity and balance load; ensure scaling policy triggers when arrival_rate grows."} | Action plan: {'scale_out_to_meet_throughput_plan': {'action': ['add_server'], 'reason': 'Under-provisioned: arrival_rate (41.3858) far exceeds current throughput (4.32213) and opt_throughput (28.3934). With 3 active servers and no activation in progress, capacity is insufficient and queue growth risk exists. Latency (RT) is well below threshold, so the bottleneck is throughput. Act by adding one server first (per policy to activate one server at a time) to increase capacity toward the target throughput.', 'entry': 'scale_out_to_meet_throughput'}} | Result: ok
+manager      | 2025-10-23 17:43:21,516 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:43:42,304 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+custom_swim  | t=1764.874581 addServer() complete
+manager      | 2025-10-23 17:44:15,285 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:44:33,018 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+manager      | 2025-10-23 17:44:33,020 - ERROR - Error on adaptation loop: Expecting ',' delimiter: line 5 column 1 (char 761)
+manager      | 2025-10-23 17:44:33,021 - INFO - Trying to reconnect in 5 seconds...
+manager      | 2025-10-23 17:44:38,026 - INFO - Connection endded.
+manager      | 2025-10-23 17:44:38,028 - INFO - Connected to swim in custom_swim:4242
+
