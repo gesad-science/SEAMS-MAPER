@@ -20,7 +20,7 @@ By combining the structured rigor of MAPE-K with the contextual and inferential 
 
 Below is a high-level view of the MAPER architecture, highlighting the integration of the LLM Reasoner into the classical MAPE-K loop.
 
-![MAPER Architecture](docs/maper-architecture.pdf)
+![MAPER Architecture](docs/maper-architecture.png)
 
 ---
 
@@ -108,7 +108,7 @@ These configurations are used to simulate faults, disruptions, and unexpected ru
 
 A demonstration video explaining the architecture, execution flow, and adaptation results is available below:
 
-[MAPER Demo Video](docs/MAPER USE GUIDE VIDEO.mp4)
+[MAPER Demo Video](docs/guide.mp4)
 
 ---
 
