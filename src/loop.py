@@ -38,7 +38,7 @@ def auto_adaptation_loop():
     analyzer = Analyzer(kb)
     planner = Planner(kb)
 
-    logging.info("Iniciando loop de adaptação automática...")
+    logging.info("Starting loop...")
 
     iteration = 1
 

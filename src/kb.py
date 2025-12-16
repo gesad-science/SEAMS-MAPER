@@ -56,6 +56,5 @@ class KnowledgeBase:
         self.plan_options.update(new_plan)
 
     def update_metric_reaction(self, diagonosis, plan):
-        #logging.info(f"ENTRANDO NO KB: DIAGNOSIS->{diagonosis}, PLAN: {plan}")
         self.last_update['diagnosis'] = diagonosis
         self.last_update['plan'] = plan
