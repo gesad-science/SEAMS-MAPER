@@ -205,9 +205,13 @@ The commands must be compatible with and supported by the managed application an
 
 ## Demo Video
 
-A demonstration video explaining the architecture, execution flow, and adaptation results is available below:
+A demonstration video explaining how to run the application:
 
 [MAPER Demo Video](docs/guide.mp4)
+
+And a video containing a complete execution:
+
+[![MAPER Demo Video](https://img.youtube.com/vi/iS7G-Fh3-5g/0.jpg)](https://www.youtube.com/watch?v=iS7G-Fh3-5g)
 
 ---
 
