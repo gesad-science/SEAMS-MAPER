@@ -91,10 +91,10 @@ JUGDE_SETTINGS = {
 
 CONVERSATION_ATTEMPTS = 3
 
-REASONING = False
+REASONING = True
 SERVICE = 'gpt'
 
-JUDGE_MODE = False
+JUDGE_MODE = True
 
 LOOP_TIME = 30
 ############################# END OF SYSTEM CONFIGURATION ##############################

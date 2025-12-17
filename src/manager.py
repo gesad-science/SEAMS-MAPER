@@ -24,7 +24,7 @@ class SwimClient:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.settimeout(10.0)
             self.sock.connect((self.host, self.port))
-            logging.info(f"Conectado ao SWIM em {self.host}:{self.port}")
+            logging.info(f"Connected to SWIM in {self.host}:{self.port}")
         except Exception as e:
             logging.error(f"Erro ao conectar: {e} - tentando novamente em 5 segundos...")
             time.sleep(5)
