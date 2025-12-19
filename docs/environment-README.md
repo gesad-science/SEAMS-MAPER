@@ -1,5 +1,3 @@
-# environment-README.md
-
 # Environment Configuration with OMNeT++ (SWIM)
 
 This document explains how to configure the simulated environment used by MAPER through an OMNeT++ configuration file (`swim.ini`). The goal of this file is to define how the environment behaves during simulation, including execution time, workload input, server pool limits, and adaptation-related parameters.

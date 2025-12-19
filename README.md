@@ -85,6 +85,16 @@ For a complete and detailed explanation of all configuration options, examples, 
 
 ### Environment Configuration (SWIM)
 
+- SWIM is a simulation environment built on top of OMNeT++ 
+- Used to model and evaluate self-adaptive software systems under controlled and reproducible conditions 
+- It represents a service-oriented application with variable workload, server pools, and quality-of-service mechanisms such as brownout and dynamic scaling
+- Within MAPER, SWIM acts as the managed environment where adaptation decisions are applied 
+- Allows researchers to observe how the control loop responds to changing demand, failures, and uncertainty over time
+
+Below is a high-level view of the SWIM architecture, highlighting the integration with our approach.
+
+![MAPER Architecture](docs/swim_maper.png.png)
+
 The simulated environment is configured via the `swim.ini` file, which defines how the SWIM network is executed inside OMNeT++.
 
 This file controls simulation duration, workload input, server pool limits, and key parameters that influence adaptation behavior.
@@ -120,7 +130,7 @@ These scenarios specify when unexpected events occur and which actions are execu
 
 For a complete explanation of scenario configuration, failure modeling patterns, and advanced examples, see:
 
-[SCENARIO_SIMULATOR_DOCUMENTATION](docs/crash-README.md)
+[UNEXPECTED_SIMULATOR_DOCUMENTATION](docs/crash-README.md)
 
 ---
 
