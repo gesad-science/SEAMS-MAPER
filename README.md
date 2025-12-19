@@ -60,146 +60,66 @@ MAPER is designed to be highly configurable and extensible.
 
 ### Prompt Engineering and Business Rules
 
-MAPER exposes its reasoning behavior through a single configuration file:
+All configuration related to the knowledge base (constraints, goals, adaptation options, plans, and LLM settings) is defined in:
 
 src/user_config.py
 
-This file is the main entry point for customizing how the system interprets the environment, reasons about uncertainty, and performs self-adaptation.
+This file controls how MAPER interprets the environment and performs self-adaptation.
 
-Users can modify:
-- Prompts used by the LLM Reasoner
-- Auto-adaptation logic
-- Domain-specific business rules
+The user_config.py file is organized into the following conceptual sections:
 
-All of these can be customized in the file above.
+- Constraints: define what is allowed or forbidden
+- Adaptation Goals: define what the system tries to achieve
+- Adaptation Options: define how system states are diagnosed
+- Plan Options: define what actions are executed in response to states
+- LLM Settings: define how the reasoning component behaves
 
-##### Constraints
+Each section contributes to a different phase of the MAPER control loop.
 
-The variable "CONSTRAINTS" defines hard boundaries and execution conditions for system variables and actions. Constraints can specify minimum, maximum, or exact values for variables, as well as logical conditions that must be satisfied for an action to be executed.
+For a complete and detailed explanation of all configuration options, examples, and advanced usage, see:
 
-For example:
-
-'add_server': {
-    'active_servers': 'servers'
-}
-
-This indicates that the action 'add_server' can only be executed when the number of active servers is equal to the total number of servers.
-
-Another example:
-
-'dimmer': [0.0, 1.0]
-
-This means that the variable 'dimmer' is constrained to values between 0.0 and 1.0.
-
-##### Goals
-
-The variable "ADAPTATION_GOALS" defines target values for system variables that the adaptation process should achieve or maintain.
-
-For example:
-
-ADAPTATION_GOALS = {
-    'threshold_response_time': 0.1
-}
-
-This means that the variable 'threshold_response_time' must be less than or equal to 0.1.
-
-##### Adaptations
-
-The variable "ADAPTATION_OPTIONS" defines a pre-configured set of system states (diagnoses) based on observed variables. Each adaptation option describes the conditions under which a specific system state is considered valid.
-
-For example:
-
-'ok': {
-    'priority': 1,
-    'margin_': True,
-    'dimmer': [0.75, 1.0],
-    'servers': 1,
-    'basic_rt': [0.0, 'threshold_response_time']
-}
-
-This definition indicates that the system is in the 'ok' state when:
-- The dimmer value is between 0.75 and 1.0
-- There is exactly one active server
-- The response time is between 0.0 and the configured threshold_response_time
-
-The field 'margin_' specifies whether comparisons are inclusive (>=, <=) or exclusive (>, <).
-The field 'priority' determines the order in which adaptation conditions are evaluated.
-
-##### Plans
-
-The variable "PLAN_OPTIONS" defines the execution plans associated with adaptation states. Each plan specifies which actions should be executed when a particular state is entered.
-
-For example:
-
-'decrease_servers_plan': {
-    'entry': 'decrease_servers',
-    'action': ['remove_server'],
-    'reason': 'System underutilized; a server can be removed to optimize resource usage.'
-}
-
-In this example, the plan 'decrease_servers_plan' is triggered when the system enters the 'decrease_servers' state. The 'action' field defines the commands executed by the executor component, while the 'reason' field documents the rationale behind the chosen plan.
-
-##### LLMs
-
-The variable "LLM_SETTINGS" configures the LLM-based Reasoner component. It must contain two top-level keys: "analyze" and "plan".
-
-Each of these keys includes the following fields:
-- model: the LLM model used by the reasoner
-- temperature: currently deprecated; any numeric value is accepted
-- max_tokens: the maximum number of tokens expected in the model response
-- context: the system context provided to the model; this field is automatically populated with constraints, goals, and relevant system information
-- prompt: the prompt template used to guide the model’s reasoning, which may vary depending on the system state and execution phase
+[CONFIG_DOCUMENTATION](docs/config-README.md)
 
 ---
 
 ### Environment Configuration (SWIM)
 
-The simulated or target environment can be configured via:
+The simulated environment is configured via the `swim.ini` file, which defines how the SWIM network is executed inside OMNeT++.
 
-swim.ini
+This file controls simulation duration, workload input, server pool limits, and key parameters that influence adaptation behavior.
 
-This file allows users to adjust environmental parameters, constraints, and execution conditions used by the adaptation loop.
+Only the most relevant parameters for adaptation and experimentation are described here. OMNeT++-specific and auxiliary settings are intentionally omitted.
 
-All the configuration are done in OMNET (https://doc.omnetpp.org/omnetpp/manual/)
+For a complete and detailed explanation of the environment configuration and its key variables, see:
 
----
+[ENVIRONMENT_DOCUMENTATION](docs/environment-README.md)
 
-### Custom Scenarios
+### Request Scenario Generation
 
-Users can define and experiment with custom adaptation scenarios by editing or creating scenarios in:
+We also bring the support to creation of custom request-load scenarios to simulate realistic and adversarial workloads.
 
-Trace.ipynb
+These scenarios are generated using a dedicated Jupyter Notebook that allows users to explicitly design how requests arrive over time, including peaks, bursts, and normalization phases.
 
-This notebook is intended for scenario design, experimentation, and trace analysis.
+The notebook produces a deterministic request trace that is later consumed by the simulator during execution.
 
----
+For a complete explanation of request scenario generation, workload patterns, and examples, see:
+
+[SCENARIO_DOCUMENTATION](docs/scenario-README.md)
+
 
 ### Crash and Failure Injection
 
-Failure scenarios and crash configurations can be defined in:
+MAPER supports the injection of crashes, faults, and unexpected runtime disruptions to evaluate system resilience and adaptation behavior.
+
+All failure and crash scenarios are defined in:
 
 src/unexpected_simulator/scenario.py
 
-These configurations are used to simulate faults, disruptions, and unexpected runtime conditions that challenge the adaptive system.
+These scenarios specify when unexpected events occur and which actions are executed to disturb the system during execution.
 
-##### Scenarios
+For a complete explanation of scenario configuration, failure modeling patterns, and advanced examples, see:
 
-The variable "SCENARIOS" allows the definition of unexpected or disruptive behaviors that are injected into the system during execution. These scenarios are used to simulate faults, crashes, or abnormal conditions that challenge the self-adaptive capabilities of MAPER.
-
-Example:
-
-SCENARIOS = {
-    'crashes': {
-        'time': 190,
-        'commands': ['remove_server', 'remove_server']
-    }
-}
-
-Each key in "SCENARIOS" represents the name of a scenario. Inside each scenario definition:
-- The field "time" specifies the simulation time (or execution step) at which the scenario is triggered.
-- The field "commands" defines a sequence of actions that will be executed when the scenario is activated.
-
-The commands must be compatible with and supported by the managed application and its executor. By combining multiple commands, users can model complex failure patterns such as cascading crashes, resource exhaustion, or abrupt environmental changes.
+[SCENARIO_SIMULATOR_DOCUMENTATION](docs/crash-README.md)
 
 ---
 
