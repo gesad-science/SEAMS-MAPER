@@ -57,7 +57,7 @@ Action constraints define logical conditions that must be satisfied before an ac
 
 Example:
 
-```
+```python
 'add_server': {
     'active_servers': 'servers'
 }
@@ -67,7 +67,7 @@ This constraint means that the action add_server can only be executed if the num
 
 More complex examples are possible:
 
-```
+```python
 'remove_server': {
     'active_servers': [2, 'servers']
 }
@@ -87,7 +87,7 @@ Goals are typically expressed as upper bounds, lower bounds, or exact targets.
 
 Example:
 
-```
+```python
 ADAPTATION_GOALS = {
     'threshold_response_time': 0.1
 }
@@ -97,7 +97,7 @@ This specifies that the system should keep the response time less than or equal 
 
 Multiple goals can be defined simultaneously:
 
-```
+```python
 ADAPTATION_GOALS = {
     'threshold_response_time': 0.1,
     'energy_consumption': [0.0, 50.0],
@@ -119,7 +119,7 @@ Each adaptation option represents a diagnosis and is defined by a set of conditi
 
 Example:
 
-```
+```python
 'ok': {
     'priority': 1,
     'margin_': True,
@@ -142,7 +142,7 @@ The field margin_ controls comparison strictness:
 
 Another example:
 
-```
+```python
 'overloaded': {
     'priority': 0,
     'margin_': False,
@@ -168,7 +168,7 @@ Each plan links:
 
 Example:
 
-```
+```python
 'decrease_servers_plan': {
     'entry': 'decrease_servers',
     'action': ['remove_server'],
@@ -180,7 +180,7 @@ This plan is triggered when the system is diagnosed as being in the decrease_ser
 
 Plans may contain multiple actions:
 
-```
+```python
 'scale_up_plan': {
     'entry': 'overloaded',
     'action': ['add_server', 'increase_dimmer'],
@@ -211,7 +211,7 @@ Each section contains the following fields:
 
 Example:
 
-```
+```python
 LLM_SETTINGS = {
     'analyze': {
         'model': 'gpt-4',

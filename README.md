@@ -38,7 +38,7 @@ Below is a high-level view of the MAPER architecture, highlighting the integrati
 
 Create a `.env` file at the root of the project with the following content: 
 
-OPENAI_API_KEY=your_api_key_here
+> `OPENAI_API_KEY=your_api_key_here`
 
 This key is required for the LLM Reasoner to operate.
 
@@ -47,8 +47,9 @@ This key is required for the LLM Reasoner to operate.
 ### 3. Build and Run
 
 From the project root, execute:
-
+```bash
 docker-compose up --build
+```
 
 Once this command is executed, the entire MAPER process will start automatically, including the self-adaptive control loop and the LLM-based reasoning component.
 
@@ -62,7 +63,7 @@ MAPER is designed to be highly configurable and extensible.
 
 All configuration related to the knowledge base (constraints, goals, adaptation options, plans, and LLM settings) is defined in:
 
-src/user_config.py
+> `src/user_config.py`
 
 This file controls how MAPER interprets the environment and performs self-adaptation.
 
@@ -113,7 +114,7 @@ MAPER supports the injection of crashes, faults, and unexpected runtime disrupti
 
 All failure and crash scenarios are defined in:
 
-src/unexpected_simulator/scenario.py
+> `src/unexpected_simulator/scenario.py`
 
 These scenarios specify when unexpected events occur and which actions are executed to disturb the system during execution.
 

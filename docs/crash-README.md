@@ -6,7 +6,7 @@ Failure injection is a first-class concept in MAPER and is used to evaluate how 
 
 All crash and failure configurations are defined in:
 
-src/unexpected_simulator/scenario.py
+> `src/unexpected_simulator/scenario.py`
 
 This file allows users to declaratively describe when and how unexpected events occur during system execution.
 
@@ -34,12 +34,14 @@ Each scenario represents a named fault pattern that is triggered at a specific m
 
 Basic structure:
 
+```python
 SCENARIOS = {
     'scenario_name': {
         'time': <trigger_time>,
         'commands': [<command_1>, <command_2>, ...]
     }
 }
+```
 
 ---
 
@@ -57,7 +59,7 @@ The key of each entry is the scenario identifier. This name is used only for org
 
 Example:
 
-'crashes'
+> 'crashes'
 
 Other examples could include:
 
@@ -79,7 +81,7 @@ The exact interpretation depends on the managed application and simulator config
 
 Example:
 
-'time': 190
+> `'time': 190`
 
 This means the scenario will be triggered when the system reaches time (or step) 190.
 
@@ -91,7 +93,7 @@ The field commands defines a list of actions that will be executed when the scen
 
 Example:
 
-'commands': ['remove_server', 'remove_server']
+> `'commands': ['remove_server', 'remove_server']`
 
 This simulates two consecutive server failures at the same moment, modeling a crash of multiple resources.
 
@@ -104,12 +106,14 @@ Commands must be:
 
 ## Complete Example
 
+```python
 SCENARIOS = {
     'crashes': {
         'time': 190,
         'commands': ['remove_server', 'remove_server']
     }
 }
+```
 
 This scenario models a sudden crash where two servers are removed simultaneously at time 190, forcing the system into a degraded or overloaded state.
 
@@ -119,12 +123,14 @@ This scenario models a sudden crash where two servers are removed simultaneously
 
 ### Single Failure Event
 
+```python
 SCENARIOS = {
     'single_crash': {
         'time': 50,
         'commands': ['remove_server']
     }
 }
+```
 
 This represents a simple fault where one server crashes at time 50.
 
@@ -132,12 +138,14 @@ This represents a simple fault where one server crashes at time 50.
 
 ### Cascading Failures
 
+```python
 SCENARIOS = {
     'cascading_crash': {
         'time': 120,
         'commands': ['remove_server', 'remove_server', 'remove_server']
     }
 }
+```
 
 This models a cascading failure where multiple servers fail in rapid succession, stressing the system’s recovery mechanisms.
 
@@ -145,12 +153,14 @@ This models a cascading failure where multiple servers fail in rapid succession,
 
 ### Resource Exhaustion
 
+```python
 SCENARIOS = {
     'resource_exhaustion': {
         'time': 200,
         'commands': ['increase_dimmer', 'increase_dimmer']
     }
 }
+```
 
 This scenario simulates a sudden increase in workload or resource pressure rather than a direct crash.
 
@@ -158,12 +168,14 @@ This scenario simulates a sudden increase in workload or resource pressure rathe
 
 ### Mixed Disruptions
 
+```python
 SCENARIOS = {
     'mixed_failure': {
         'time': 300,
         'commands': ['remove_server', 'increase_dimmer', 'remove_server']
     }
 }
+```
 
 This combines infrastructure failure with workload variation, creating a complex and highly uncertain situation for the adaptation loop.
 
