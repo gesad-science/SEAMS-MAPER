@@ -93,7 +93,7 @@ For a complete and detailed explanation of all configuration options, examples, 
 
 Below is a high-level view of the SWIM architecture, highlighting the integration with our approach.
 
-![MAPER Architecture](docs/swim_maper.png.png)
+![SWIM Architecture](docs/swim_maper.png)
 
 The simulated environment is configured via the `swim.ini` file, which defines how the SWIM network is executed inside OMNeT++.
 
