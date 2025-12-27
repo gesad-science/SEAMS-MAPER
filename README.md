@@ -144,6 +144,39 @@ And a video containing a complete execution:
 
 [![MAPER Demo Video](https://img.youtube.com/vi/iS7G-Fh3-5g/0.jpg)](https://www.youtube.com/watch?v=iS7G-Fh3-5g)
 
+## High-Level Logging
+
+Some execution logs are post-processed and translated into a high-level, human-readable format to emphasize *decisions, diagnoses, and actions*, rather than low-level events.
+
+These adapted logs are documented in:
+
+[COMPLETE_EXECUTION_DOCUMENTATION](docs/execution-README.md)
+
+### Execution Examples
+
+Three execution scenarios are presented to highlight architectural differences:
+
+1. **With Judge**  
+   Decisions are validated before execution. Invalid actions can be rejected and may trigger escalation, demonstrating governance and safety.
+
+2. **Without Judge**  
+   Decisions are executed directly after diagnosis, allowing faster adaptation but with fewer safety guarantees.
+
+3. **Without Reasoning (No LLM)**  
+   Adaptation relies only on predefined rules, often leading to limited flexibility and earlier human intervention.
+
+Together, these examples illustrate the impact of reasoning and validation on system autonomy.
+
+---
+
+## LLM Guardrails 
+
+The document [GUARDRAILS_DOCUMENTATION](docs/guardrails-README.md) describes the defensive guardrail layer used in MAPER to control and stabilize interactions with Large Language Models.
+
+It explains how inputs and outputs are validated, normalized, and safely handled across the **Analyze** and **Plan** phases, including both LLM generation and Judge validation. The documentation covers the guardrail architecture, shared JSON utilities, error handling, and fallback behaviors that prevent malformed or unsafe LLM responses from propagating into the adaptation loop.
+
+Overall, this section details how MAPER enforces minimal contracts, increases robustness under uncertainty, and enables trustworthy LLM-assisted reasoning.
+
 ---
 
 ## Summary

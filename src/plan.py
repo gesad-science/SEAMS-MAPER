@@ -4,6 +4,8 @@ from system_config import CONVERSATION_ATTEMPTS, REASONING, JUDGE_MODE
 
 from util.dict_utils import parse_json
 
+from guardrails.plan_judge_guardrails import input_plan_judge_guardrails, output_plan_judge_guardrails
+from guardrails.plan_llm_guardrails import input_plan_llm_guardrails, output_plan_llm_guardrails
 
 import json
 import logging
@@ -59,11 +61,32 @@ class Planner:
         attempts = 0
 
         while attempts <= CONVERSATION_ATTEMPTS:
-            plan_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} ADDITIONAL_CONTEXT:{additional_context}", self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+
+            prompt = f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} ADDITIONAL_CONTEXT:{additional_context}"
+
+            ### INPUT LLM GUARDRAIL ###
+            prompt = input_plan_llm_guardrails(prompt)
+
+            plan_result = ask_reasoning(prompt, self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+
+            ### OUTPUT LLM GUARDRAIL ###
+            plan_result = output_plan_llm_guardrails(plan_result)
+
             if not JUDGE_MODE:
                 logging.info(f"Plan Result: {plan_result}")
                 return plan_result
-            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} PLANNER_RESULT:{plan_result}", self.judge_settings['temperature'], self.judge_settings['max_tokens'])
+            
+
+            prompt_judge = f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER DIAGNOSIS: {diagnosis} PLANNER_RESULT:{plan_result}"
+
+            ### INPUT JUDGE GUARDRAIL ###
+            prompt_judge = input_plan_judge_guardrails(prompt_judge)
+
+            judge_result = ask_reasoning(prompt_judge, self.judge_settings['temperature'], self.judge_settings['max_tokens'])
+
+            ### OUTPUT JUDGE GUARDRAIL ###
+            judge_result = output_plan_judge_guardrails(judge_result)
+
             logging.info(f"Judge Result: {judge_result}")
             try:
                 judge_json = json.loads(parse_json(judge_result))

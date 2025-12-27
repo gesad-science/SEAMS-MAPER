@@ -7,6 +7,9 @@ from system_config import CONVERSATION_ATTEMPTS, REASONING, JUDGE_MODE
 
 from util.dict_utils import parse_json
 
+from guardrails.analyze_judge_guardrails import input_analyze_judge_guardrails, output_analyze_judge_guardrails
+from guardrails.analyze_llm_guardrails import input_analyze_llm_guardrails, output_analyze_llm_guardrails
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -61,14 +64,35 @@ class Analyzer:
         attempts = 0
 
         while attempts <= CONVERSATION_ATTEMPTS:
-            analysis_result = ask_reasoning(f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ADDITIONAL_CONTEXT:{additional_context}", self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+
+            prompt = f"PROMPT:{self.llm_settings['prompt']} CONTEXT:{self.llm_settings['context']} ADDITIONAL_CONTEXT:{additional_context}"
+
+            ### INPUT LLM GUARDRAIL ###
+            prompt = input_analyze_llm_guardrails(prompt)
+
+            analysis_result = ask_reasoning(prompt, self.llm_settings['temperature'], self.llm_settings['max_tokens'])
+
+            ### OUTPUT LLM GUARDRAIL ###
+            analysis_result = output_analyze_llm_guardrails(analysis_result)
+
             if not JUDGE_MODE:
                 logging.info(f"Analyzer Result: {analysis_result}")
                 return analysis_result
-            judge_result = ask_reasoning(f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER_RESULT:{analysis_result}", self.judge_settings['temperature'], self.judge_settings['max_tokens'])
+            
+            judge_prompt = f"PROMPT:{self.judge_settings['prompt']} CONTEXT:{self.judge_settings['context']} ANALYZER_RESULT:{analysis_result}"
+
+            ### INPUT JUDGE GUARDRAIL ###
+            judge_prompt = input_analyze_judge_guardrails(judge_prompt)
+
+            judge_result = ask_reasoning(judge_prompt, self.judge_settings['temperature'], self.judge_settings['max_tokens'])
+
+            ### OUTPUT JUDGE GUARDRAIL ###
+            judge_result = output_analyze_judge_guardrails(judge_result)
+
             logging.info(f"Judge Result: {judge_result}")
             try:
-                judge_json = json.loads(parse_json(judge_result))
+                logging.info(f"TRYING TO LOAD JSON: {judge_result}")
+                judge_json = json.loads(judge_result)
                 judge_result = str(judge_json['verdict'])
             except Exception as e:
                 attempts += 1

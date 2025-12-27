@@ -40,7 +40,7 @@ ADAPTATION_OPTIONS = { ########### SHOULD HAVE A PRIORITY ORDER ############
         'margin_': False,
         'dimmer' : [0.0, 1.0],  
         'servers': [0, 'max_servers'],
-        'basic_rt': ['threshold_response_time', 4.0],
+        'basic_rt': ['threshold_response_time', 1.0],
         'activating_server': False
     },
     'decrease_dimmer': {
@@ -48,7 +48,7 @@ ADAPTATION_OPTIONS = { ########### SHOULD HAVE A PRIORITY ORDER ############
         'margin_': True,
         'dimmer' : [0.75, 1.0],
         'servers': 'max_servers',
-        'basic_rt': ['threshold_response_time', 4.0]
+        'basic_rt': ['threshold_response_time', 41.0]
     },
 }
 
