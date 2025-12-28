@@ -359,3 +359,5 @@ These three executions demonstrate how SWIM behaves under different configuratio
 - Without Reasoning: stable but limited, heavy reliance on human intervention
 
 Together, they illustrate the trade-offs between autonomy, safety, and performance in self-adaptive systems.
+
+For more details about the logs and to obtain the full version, access the `results` folder.
